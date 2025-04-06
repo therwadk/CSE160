@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vector</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      html {
+        background-color: white;
+        color: black;
+      }
+      .button {
+        background-color: mediumpurple;
+        border-width: 0px;
+      }
+      .title {
+        color: rebeccapurple;
+      }
+    </style>
+  </head>
+
+  <body onload="main()" class = "mt-4 ml-4">
+    <canvas id="example" width="400" height="400" style="border-radius: 15px;">
+      Please use a browser that supports "canvas"
+    </canvas>
+
+    <div class="input-pair mt-4">
+      <label class="title is-6" for="v1_1">v1:</label>
+      <input type="text" placeholder="x1" id="v1_1">
+      <input type="text" placeholder="y1" id="v1_2">
+    </div>
+
+    <div class="input-pair">
+      <label class="title is-6" for="v2_1">v2:</label>
+      <input type="text" placeholder="x2" id="v2_1">
+      <input type="text" placeholder="y2" id="v2_2">
+    </div>
+
+    <div class="mt-4" >
+      <label class="title is-6" for="operations">Operation: </label>
+      <select id="operations">
+        <option value="select">Select</option>
+        <option value="add">Add</option>
+        <option value="sub">Subtract</option>
+        <option value="mul">Multiply</option>
+        <option value="div">Divide</option>
+        <option value="mag">Magnitude</option>
+        <option value="nor">Normalize</option>
+        <option value="ang">Angle Between</option>
+        <option value="are">Area</option>
+      </select>
+
+      <label class="title is-6 ml-4" for="scalar">Scalar: </label>
+      <input type="text" id="scalar">
+    </div>
+
+    <input class="button mt-4" type="submit" id="submit" value="Draw">
+
+    <script src="asg0.js"></script>
+    <script src="lib/cuon-matrix-cse160.js"></script>
+  </body>
+</html>
