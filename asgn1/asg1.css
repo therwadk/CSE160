@@ -23,4 +23,13 @@ label {
     color: lightgray;
 }
 
-
+.block {
+    background-color: rgb(235, 233, 211);
+    margin: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: fit-content;
+    border-radius: 8px;
+}
