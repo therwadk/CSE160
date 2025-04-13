@@ -1,0 +1,26 @@
+body {
+    font-family: sans-serif;
+}
+
+button {
+    background-color: rgb(215, 207, 200);
+    border-width: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+canvas {
+    border-radius: 15px;
+}
+
+label {
+    color: lightgray;
+}
+
+
