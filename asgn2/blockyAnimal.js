@@ -100,10 +100,14 @@ let g_selectedSegments = 10;
 let g_AnimalGlobalRotation = 0;
 let g_headAngleX = 0;
 let g_headAngleY = 0;
+let g_headAngleZ = 0;
 let g_lEyebrowPos = 5;
 let g_rEyebrowPos = 5;
+let g_rEyeScaleY = 1.0;    // starting Y scale of right eye
 let g_hatSpinAngle = 0;
 let g_Animation = true;
+let g_isShiftAnimation = false;  // Whether special shift-click animation is happening
+let g_shiftAnimProgress = 0;      // Progress from 0 to 1
 
 
 function addActionsFromHtmlUI () {
@@ -168,6 +172,18 @@ function addActionsFromHtmlUI () {
 
 }
 
+function handleClick(ev) {
+  if (ev.shiftKey) {
+    g_headAngleX = 0;
+    g_headAngleY = 0;
+    g_headAngleZ = 0;
+    g_rEyebrowPos = 5;  // Reset to slider value
+    g_rEyeScaleY = 1.0; // Reset eye scale
+    g_isShiftAnimation = true;
+    g_shiftAnimProgress = 0;
+    return;
+  }
+}
 
 function main() {
 
@@ -178,6 +194,8 @@ function main() {
 
   // setup actions from the HTML UI elements
   addActionsFromHtmlUI();
+
+  canvas.onmousedown = handleClick;
 
   // Specify the color for clearing <canvas>
   gl.clearColor(0.8, 0.9, 1.0, 1.0);
@@ -241,6 +259,7 @@ function renderScene() {
   var headMatrix = new Matrix4(bodyChildMatrix);
   headMatrix.translate(0.025, 0.55, 0);  // Move up to where the head sits
   headMatrix.translate(0.175, 0.175, 0.125);  // Move pivot point to center of head (half of scaled size)
+  headMatrix.rotate(g_headAngleZ, 0, 0, 1);   // Rotate around Z first
   headMatrix.rotate(g_headAngleY, 0, 1, 0);   // Rotate around Y axis
   headMatrix.rotate(g_headAngleX, 1, 0, 0);   // Rotate around X axis
   headMatrix.translate(-0.175, -0.175, -0.125);  // Move pivot back
@@ -315,7 +334,7 @@ function renderScene() {
   var rightEyebrow = new Cube();
   rightEyebrow.color = darkgrey;
   var rightEyebrowMatrix = new Matrix4(headChildMatrix);
-  rightEyebrowMatrix.translate(0.23,g_rEyebrowPos/100+0.2,-0.01);
+  rightEyebrowMatrix.translate(0.23, g_rEyebrowPos/100 + 0.2, -0.01);
   rightEyebrowMatrix.scale(0.1,0.05,0.2);
   rightEyebrow.drawCube(rightEyebrowMatrix);
 
@@ -329,9 +348,9 @@ function renderScene() {
   var rightEye = new Cube();
   rightEye.color = black;
   var rightEyeMatrix = new Matrix4(headChildMatrix);
-  rightEyeMatrix.translate(0.27,0.15,-0.001);
-  rightEyeMatrix.scale(0.05,0.05,0.05);
-  rightEye.drawCube(rightEyeMatrix);
+  rightEyeMatrix.translate(0.27, 0.15 + 0.025 * (1 - g_rEyeScaleY), -0.001);
+  rightEyeMatrix.scale(0.05, 0.05 * g_rEyeScaleY, 0.05);
+  rightEye.drawCube(rightEyeMatrix);  
 
   var leftEar = new Cube();
   leftEar.color = grey;
@@ -357,14 +376,42 @@ function renderScene() {
   hatMatrix.translate(-0.1, -0.1, -0.1); // Undo half size (0.2/2 = 0.1) so scaling happens correctly
   hatMatrix.scale(0.2, 0.3, 0.2); // Then apply scaling
   hat.drawPyramid(hatMatrix);
-
-
 }
 
 function updateAnimationAngles() {
+  if (g_isShiftAnimation) {
+    g_shiftAnimProgress += 0.02;
+
+    if (g_shiftAnimProgress < 0.5) {
+      g_headAngleZ = -40 * g_shiftAnimProgress;
+      g_headAngleX = 0;
+      g_headAngleY = 0;
+
+      g_rEyebrowPos = 5 - 6 * g_shiftAnimProgress; // 5 → 2
+      g_rEyeScaleY = 1.0 - 0.04 * (g_shiftAnimProgress * 2); // 1.0 → 0.96
+    } else if (g_shiftAnimProgress < 1.0) {
+      g_headAngleZ = -20 * (1 - (g_shiftAnimProgress - 0.5) * 2);
+      g_headAngleX = 0;
+      g_headAngleY = 0;
+
+      g_rEyebrowPos = 2 + 6 * (g_shiftAnimProgress - 0.5) * 2; // 2 → 5
+      g_rEyeScaleY = 0.96 + 0.04 * ((g_shiftAnimProgress - 0.5) * 2); // 0.96 → 1.0
+    } else {
+      g_isShiftAnimation = false;
+      g_shiftAnimProgress = 0;
+      g_rEyebrowPos = 5;
+      g_rEyeScaleY = 1.0;
+    }
+
+    return;
+  }
+
+  // Normal animation
   if (g_Animation) {
-    g_headAngleX = 20 * Math.sin(g_seconds);  // Make the head bob forward/back
-    g_headAngleY = 20 * Math.sin(g_seconds / 2);  // Head turn slowly left/right
+    g_headAngleX = 20 * Math.sin(g_seconds * 2);
+    g_headAngleY = 20 * Math.sin(g_seconds);
+    g_headAngleZ = 0;
+    g_rEyeScaleY = 1.0;
     g_hatSpinAngle = (g_seconds * 360) % 360;
   }
 }
