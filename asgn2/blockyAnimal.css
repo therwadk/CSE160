@@ -1,0 +1,47 @@
+body {
+    font-family: monospace;
+}
+
+button {
+    background-color: rgb(252, 247, 244);
+    border-width: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+canvas {
+    border-radius: 15px;
+}
+
+.block {
+    background-color: rgb(235, 233, 211);
+    margin: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: fit-content;
+    border-radius: 8px;
+}
+
+.sliderHouse {
+    background-color: gainsboro;
+    padding: 15px;
+    margin-top: 5px;
+    border-radius: 5px;
+    width: fit-content;
+    gap: 5px;
+}
+
+.box {
+    display: flex;
+    flex-direction: row; /* default, but explicit */
+    align-items: center; /* optional: vertically center items */
+    gap: 5px;
+  }
