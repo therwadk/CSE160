@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Blocky Animal</title>
+    <link rel="stylesheet" href="World.css">
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+    <br>
+
+    <div class="sliderHouse">
+      <label>FPS: </label><label id="fpsValue">0</label>
+    </div>
+    <div class="sliderHouse box">
+      <label>Animation: </label><button type="button" id="animationOn">ON</button><button type="button" id="animationOff">OFF</button>
+    </div>
+
+    <div class="sliderHouse">
+      ANIMAL ROTATION <input type="range" min="-360" max="360" value="0" class="slider" id="angleslide"> <label id="angleValue">0</label>
+    </div>
+
+    <div class="box">
+      <div class="sliderHouse">
+        HEAD ANGLE X <input type="range" min="-45" max="45" value="0" class="slider" id="headXslide"> <label id="headXValue">0</label>
+      </div>
+      <div class="sliderHouse">
+        HEAD ANGLE Y <input type="range" min="-45" max="45" value="0" class="slider" id="headYslide"> <label id="headYValue">0</label>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="sliderHouse">
+        LEFT EYEBROW <input type="range" min="0" max="10" value="5" class="slider" id="lEyebrowslide"> <label id="lEyebrowValue">5</label>
+      </div>
+      <div class="sliderHouse">
+        RIGHT EYEBROW <input type="range" min="0" max="10" value="5" class="slider" id="rEyebrowslide"> <label id="rEyebrowValue">5</label>
+      </div>
+    </div>
+
+    <div class="sliderHouse box">
+      <button id="addBlockBtn">Add Block</button>
+      <button id="removeBlockBtn">Remove Block</button>
+    </div>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <!-- <script src="lib/cuon-matrix.js"></script> -->
+    <script src="lib/cuon-matrix-cse160.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Cube.js"></script>
+    <script src="Pyramid.js"></script>
+    <script src="Camera.js"></script>
+    <script src="World.js"></script>
+  </body>
+</html>
